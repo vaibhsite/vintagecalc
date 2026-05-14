@@ -1,0 +1,345 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+ 
+body {
+  min-height: 100vh;
+  background-color: #c4b89a;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 40px,
+      rgba(0,0,0,0.03) 40px,
+      rgba(0,0,0,0.03) 41px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 40px,
+      rgba(0,0,0,0.03) 40px,
+      rgba(0,0,0,0.03) 41px
+    );
+  font-family: 'Share Tech Mono', monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+ 
+/* ─── MAIN BODY ─────────────────────────────────────────────── */
+.calculator {
+  width: 520px;
+  background: linear-gradient(160deg, #2a2a22 0%, #1a1a14 60%, #111108 100%);
+  border-radius: 6px 6px 18px 18px;
+  padding: 0;
+  box-shadow:
+    0 2px 0 #5a4a20,
+    0 4px 0 #4a3a10,
+    0 8px 0 #3a2a08,
+    0 12px 0 #2a1e05,
+    0 16px 30px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    inset 2px 0 0 rgba(255,255,255,0.04),
+    inset -2px 0 0 rgba(255,255,255,0.04);
+  border: 1px solid #5a4a20;
+  position: relative;
+}
+ 
+/* rivets on corners */
+.calculator::before,
+.calculator::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #8a7a50, #3a2e10);
+  border: 1px solid #2a2010;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.6);
+  bottom: 18px;
+  z-index: 2;
+}
+.calculator::before { left: 18px; }
+.calculator::after  { right: 18px; }
+ 
+/* ─── PAPER ROLL HOUSING ────────────────────────────────────── */
+.paper-housing {
+  background: linear-gradient(180deg, #1e1e18 0%, #161610 100%);
+  border-radius: 6px 6px 0 0;
+  padding: 12px 20px 0;
+  border-bottom: 3px solid #0a0a08;
+  position: relative;
+  overflow: hidden;
+}
+ 
+/* roller axle lines */
+.paper-housing::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  right: 14px;
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    #333 0px, #333 4px,
+    #1a1a14 4px, #1a1a14 8px
+  );
+  border-radius: 2px;
+  opacity: 0.5;
+}
+ 
+.paper-slot {
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+  position: relative;
+  background: #f5f0e0;
+  border-left: 3px solid #d4c9a0;
+  border-right: 3px solid #d4c9a0;
+  border-top: 2px solid #c8bd90;
+}
+ 
+/* paper texture lines */
+.paper-slot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 17px,
+    rgba(0,0,0,0.06) 17px,
+    rgba(0,0,0,0.06) 18px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+ 
+#paper-tape {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 6px 10px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: #2a2010;
+  line-height: 18px;
+  text-align: right;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 2;
+}
+ 
+.tape-line {
+  display: block;
+  border-bottom: 1px dashed rgba(0,0,0,0.1);
+  padding: 1px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ 
+.tape-line.tape-result {
+  font-weight: bold;
+  border-top: 2px solid #2a2010;
+  border-bottom: none;
+  font-size: 14px;
+  padding-top: 3px;
+  margin-top: 2px;
+}
+ 
+.tape-line.tape-operator {
+  color: #8a3a10;
+  font-size: 11px;
+}
+ 
+/* roll knobs on sides */
+.roll-knob {
+  position: absolute;
+  top: 8px;
+  width: 18px;
+  height: 24px;
+  background: linear-gradient(180deg, #5a4a20, #2a2010);
+  border-radius: 3px;
+  border: 1px solid #1a1008;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+.roll-knob.left  { left: 0; }
+.roll-knob.right { right: 0; }
+ 
+/* ─── DISPLAY ───────────────────────────────────────────────── */
+.display {
+  padding: 14px 20px 10px;
+  background: linear-gradient(180deg, #1e1e18, #222218);
+  border-bottom: 2px solid #0a0a08;
+}
+ 
+.display-frame {
+  background: #0d1a0a;
+  border: 3px solid #1a2a18;
+  border-radius: 4px;
+  padding: 8px 14px;
+  box-shadow:
+    inset 0 2px 8px rgba(0,0,0,0.8),
+    inset 0 0 20px rgba(0,0,0,0.4),
+    0 1px 0 rgba(255,255,255,0.05);
+  position: relative;
+  overflow: hidden;
+}
+ 
+.display-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.15) 3px,
+    rgba(0,0,0,0.15) 4px
+  );
+  pointer-events: none;
+}
+ 
+#input {
+  width: 100%;
+  height: 56px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #7aff4a;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 40px;
+  text-align: right;
+  letter-spacing: 3px;
+  text-shadow: 0 0 8px rgba(122,255,74,0.6), 0 0 2px rgba(122,255,74,0.9);
+  position: relative;
+  z-index: 1;
+  caret-color: #7aff4a;
+}
+ 
+/* ─── BUTTONS AREA ──────────────────────────────────────────── */
+.buttons {
+  display: flex;
+  gap: 16px;
+  padding: 18px 20px 24px;
+}
+ 
+.numbers {
+  flex: 3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+ 
+.operations {
+  flex: 1.4;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+ 
+/* ─── BUTTON BASE ───────────────────────────────────────────── */
+.button {
+  height: 58px;
+  border: none;
+  border-radius: 50%;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 20px;
+  font-weight: bold;
+  color: #e8dfc0;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.06s, box-shadow 0.06s;
+  user-select: none;
+  letter-spacing: 0;
+}
+ 
+/* typewriter-style raised keycap */
+.digit-button {
+  background: radial-gradient(circle at 38% 32%, #7a7060, #4a4438 60%, #2e2a20);
+  border: 1px solid #1a1610;
+  box-shadow:
+    0 4px 0 #1a1610,
+    0 5px 0 #111008,
+    0 6px 6px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    inset 0 -1px 0 rgba(0,0,0,0.3);
+  color: #f0e8c8;
+}
+ 
+.operation-button {
+  background: radial-gradient(circle at 38% 32%, #c87830, #8a4a18 60%, #5a2e08);
+  border: 1px solid #3a1a05;
+  box-shadow:
+    0 4px 0 #3a1a05,
+    0 5px 0 #250f02,
+    0 6px 6px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,200,100,0.25),
+    inset 0 -1px 0 rgba(0,0,0,0.3);
+  color: #fff8e8;
+  font-size: 22px;
+}
+ 
+/* equals key — red like in the image */
+.equal {
+  grid-column: span 2;
+  border-radius: 28px;
+  background: radial-gradient(circle at 38% 32%, #c03820, #8a2010 60%, #5a1008);
+  border: 1px solid #3a0a02;
+  box-shadow:
+    0 4px 0 #3a0a02,
+    0 5px 0 #220502,
+    0 6px 6px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,150,100,0.25),
+    inset 0 -1px 0 rgba(0,0,0,0.3);
+  color: #fff0ee;
+}
+ 
+.zero {
+  grid-column: span 2;
+  border-radius: 28px;
+}
+ 
+/* press down */
+.button:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 1px 0 #1a1610,
+    0 2px 4px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    inset 0 2px 4px rgba(0,0,0,0.3) !important;
+}
+ 
+.button:hover:not(:active) {
+  filter: brightness(1.12);
+}
+ 
+/* ─── BRAND STRIP ───────────────────────────────────────────── */
+.brand-strip {
+  background: #111008;
+  border-top: 1px solid #3a3020;
+  padding: 8px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0 0 18px 18px;
+}
+ 
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  color: #8a7a50;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+ 
+.model-tag {
+  font-size: 10px;
+  color: #4a4030;
+  letter-spacing: 2px;
+}
